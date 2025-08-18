@@ -48,24 +48,49 @@ This platform follows best practices in **microservices architecture**, **DevOps
 
 ---
 
-## 📂 Repositories in This Platform
+## 🛒 E-commerce Platform Repositories
 
-| Repository | Purpose |
-|-----------|---------|
-| `ecommerce-auth-service` | Authentication and RBAC |
-| `ecommerce-user-service` | User profile management |
-| `ecommerce-product-service` | Product catalog management |
-| `ecommerce-inventory-service` | Inventory tracking |
-| `ecommerce-order-service` | Order processing |
-| `ecommerce-payment-service` | Payment orchestration |
-| `ecommerce-notification-service` | Email/SMS notifications |
-| `ecommerce-api-gateway` | Gateway service with routing/auth |
-| `ecommerce-discovery-server` | Eureka registry |
-| `ecommerce-config-server` | Spring Cloud Config server |
-| `ecommerce-config-repo` | Externalized config files |
-| `ecommerce-test-repo` | Test reports and dashboards |
-| `ecommerce-infra-repo` | Infra-as-code, Docker, ELK, Helm |
-| `ecommerce-ci-workflows` | Shared CI/CD templates |
+This organization hosts all repositories for the E-commerce Backend platform, including services, infrastructure, tests, and documentation.
+
+### 📦 Core Services  
+
+| Repository | Description |
+| --- | --- |
+| [auth-service](https://github.com/ar-ecommerce-platform/auth-service) | User authentication and JWT management |
+| [user-service](https://github.com/ar-ecommerce-platform/user-service) | Manages user profiles and account details |
+| [product-service](https://github.com/ar-ecommerce-platform/product-service) | Manages product catalog and metadata |
+| [inventory-service](https://github.com/ar-ecommerce-platform/inventory-service) | Tracks stock levels and inventory |
+| [order-service](https://github.com/ar-ecommerce-platform/order-service) | Handles order placement and tracking |
+| [payment-service](https://github.com/ar-ecommerce-platform/payment-service) | Processes and verifies payments |
+| [notification-service](https://github.com/ar-ecommerce-platform/notification-service) | Sends emails and system alerts |
+
+
+### ⚙️ Configuration & Infrastructure  
+
+| Repository | Description |
+| --- | --- |
+| [config-server](https://github.com/ar-ecommerce-platform/config-server) | Centralized configuration service |
+| [config-repo](https://github.com/ar-ecommerce-platform/config-repo) | Centralized configs for all services |
+| [api-gateway](https://github.com/ar-ecommerce-platform/api-gateway) | Routes and secures external API traffic |
+| [discovery-server](https://github.com/ar-ecommerce-platform/discovery-server) | Eureka-based service registry for dynamic service discovery |
+| [infra](https://github.com/ar-ecommerce-platform/infra) | Infrastructure as code: Docker, Kubernetes, secrets |
+| [monitoring](https://github.com/ar-ecommerce-platform/monitoring) | Dashboards, alerts, and metrics setup |
+| [ci-workflows](https://github.com/ar-ecommerce-platform/ci-workflows) | Shared CI/CD workflows for services |
+
+
+### 🧪 Testing & Quality  
+
+| Repository | Description |
+| --- | --- |
+| [e2e-tests](https://github.com/ar-ecommerce-platform/e2e-tests) | End-to-end API and flow tests |
+| [test-reports](https://github.com/ar-ecommerce-platform/test-reports) | Stores and displays test results |
+
+
+### 📖 Documentation  
+
+| Repository | Description |
+| --- | --- |
+| [docs](https://github.com/ar-ecommerce-platform/docs) | Architecture diagrams, ADRs, and system design docs |
 
 ---
 
