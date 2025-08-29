@@ -1,0 +1,60 @@
+# ------------------------------------------------------------------------------
+# Workflow: Commit Message Linter
+# Purpose:
+#         Checks that all PR commits use the Conventional Commits style.
+#
+# Trigger:
+#       Runs automatically whenever a pull request is opened, updated, or
+#       synchronized in the ecommerce platform org.
+#
+# Notes:
+#       Validates all pull request commit messages follow the Conventional
+#       Commits style.
+#       Examples:
+#       fix(scope): bug fix
+#       feat(scope): new feature
+#       docs: update documentation
+# ------------------------------------------------------------------------------
+name: Commit Message Check
+
+on:
+  pull_request:
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------
+      # Checkout the repository for PR commits
+      # ---------------------------
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      # ---------------------------
+      # Gets commit message(s) from pull request
+      # Example:
+      #   fix(auth): handle invalid tokens
+      #   feat: add login form
+      #   docs: update README
+      #   chore: update dependencies
+      # ---------------------------
+      - name: Get commits from pull request
+        id: commits
+        run: |
+          echo "COMMITS<<EOF" >> $GITHUB_ENV
+          git log origin/${{ github.event.pull_request.base.ref }}..HEAD --pretty=format:"%s" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      # ---------------------------
+      # Checks if every commit message follows the Conventional Commits style.
+      # Example: feat(scope): new feature
+      # ---------------------------
+      - name: Check commit messages
+        run: |
+          echo "$COMMITS" | while read commit_msg; do
+            if [[ ! "$commit_msg" =~ ^(feat|fix|docs|style|refactor|perf|test|chore)(\(.+\))?:\ .+ ]]; then
+              echo "Invalid commit message: $commit_msg"
+              exit 1
+            fi
+          done

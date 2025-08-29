@@ -1,0 +1,37 @@
+# ------------------------------------------------------------------------------
+# Workflow: Dependency Review
+# Purpose:
+#       Automatically checks any new or updated dependencies in a pull request
+#       for security vulnerabilities or other risks.
+#
+# Trigger:
+#       Runs automatically whenever a pull request is opened, updated, or
+#       synchronized in the ecommerce platform org.
+#
+# Notes:
+#       Uses GitHub's official Dependency Review action to highlight potential
+#       issues before merging.
+# ------------------------------------------------------------------------------
+name: Dependency Review
+
+on:
+  pull_request:
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # ---------------------------
+      # Checkout the repository to get the dependencies
+      # ---------------------------
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # ---------------------------
+      # Runs github's dependency check
+      # ---------------------------
+      - name: Dependency check
+        uses: actions/dependency-review-action@v4
