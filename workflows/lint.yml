@@ -1,0 +1,48 @@
+# ------------------------------------------------------------------------------
+# Workflow: YML & MD Linter
+# Purpose:
+#       Lint all YAML and Markdown files in PRs and main branch
+#
+# Trigger:
+#       On every pull request and merged to main branch
+#
+# Notes:
+#       Lint checks all YAML and Markdown files.
+# ------------------------------------------------------------------------------
+name: Linting
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------
+      # Checkout the repository for PR commits
+      # ---------------------------
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # ---------------------------
+      # YAML lint using a custom config (.yamllint.yml)
+      # ---------------------------
+      - name: Lint YAML files
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config-file: .yamllint.yml
+
+      # ---------------------------
+      # Markdown lint using a custom JSON config
+      # Custom Rules:
+      #   - MD013 (line length): set to 120 for readability
+      #   - MD033 (inline HTML): disabled
+      #   - MD041 (first line heading): disabled
+      # ---------------------------
+      - name: Lint Markdown files
+        uses: avto-dev/markdown-lint@v1
+        with:
+          config: .markdownlint.json

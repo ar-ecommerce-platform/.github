@@ -1,0 +1,16 @@
+# Base ruleset
+extends: default
+
+rules:
+  # Max line length set to 120 characters
+  line-length:
+    max: 120
+    level: warning
+  # 2 spaces for indentation, and consistent list style
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+  # No trailing spaces
+  trailing-spaces: enable
+  # Require new line at end of file
+  new-line-at-end-of-file: enable
