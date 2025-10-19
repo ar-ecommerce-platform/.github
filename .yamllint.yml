@@ -1,3 +1,4 @@
+---
 # ------------------------------------------------------------------------------
 # YAML Lint Config
 # Purpose: Enforce consistent YAML style in PRs and main branch
@@ -11,10 +12,6 @@ rules:
   line-length:
     max: 120
     level: warning  # Warning, does not block PR merge
-
-  # Allow GitHub workflow files to omit '---' at start
-  document-start:
-    level: disable
 
   # Indentation: 2 spaces, sequences must be consistent
   indentation:
