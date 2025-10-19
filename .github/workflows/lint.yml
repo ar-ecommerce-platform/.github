@@ -53,4 +53,4 @@ jobs:
       - name: Lint Markdown files
         uses: avto-dev/markdown-lint@v1
         with:
-          config: ../.markdownlint.jsonc
+          config: .github/.markdownlint.jsonc
