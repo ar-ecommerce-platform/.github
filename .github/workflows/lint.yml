@@ -32,6 +32,8 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .github/.yamllint.yml
+          file_or_dir: .github/
+
 
   lint-markdown:
     name: Markdown Lint
