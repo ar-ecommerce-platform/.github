@@ -1,6 +1,4 @@
-# Pull Request Template
-
-## Summary
+# Summary
 Briefly describe what this PR changes or adds.
 
 ## Related Issues

@@ -1,0 +1,24 @@
+// ------------------------------------------------------------------------------
+// Markdown lint config
+// Purpose: Enforce consistent Markdown style in PRs and main branch
+// ------------------------------------------------------------------------------
+
+{
+  // Enable all default rules first
+  "default": true,
+
+  // MD013: Max line length → 120
+  "MD013": { "line_length": 120 },
+
+  // MD033: Allow inline HTML (<br>, <img>, <details>)
+  "MD033": false,
+
+  // MD041: Allow text before first heading
+  "MD041": false,
+
+  // MD034: Allow bare URLs (e.g., https://github.com)
+  "MD034": false,
+
+  // MD024: Allow duplicate headings if in different sections
+  "MD024": { "siblings_only": true }
+}

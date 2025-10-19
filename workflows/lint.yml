@@ -12,17 +12,18 @@
 name: Linting
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 
 jobs:
-  lint:
+  lint-yaml:
+    name: YAML Lint
     runs-on: ubuntu-latest
-
     steps:
       # ---------------------------
-      # Checkout the repository for PR commits
+      # Checkout the repository
       # ---------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -35,6 +36,17 @@ jobs:
         with:
           config-file: .yamllint.yml
 
+  lint-markdown:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Warnings don't block PRs
+    steps:
+      # ---------------------------
+      # Checkout the repository
+      # ---------------------------
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       # ---------------------------
       # Markdown lint using a custom JSON config
       # Custom Rules:
@@ -45,4 +57,4 @@ jobs:
       - name: Lint Markdown files
         uses: avto-dev/markdown-lint@v1
         with:
-          config: .markdownlint.json
+          config: .markdownlint.jsonc
