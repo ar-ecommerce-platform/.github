@@ -12,6 +12,10 @@ rules:
     max: 120
     level: warning  # Warning, does not block PR merge
 
+  # Allow GitHub workflow files to omit '---' at start
+  document-start:
+    level: disable
+
   # Indentation: 2 spaces, sequences must be consistent
   indentation:
     spaces: 2
