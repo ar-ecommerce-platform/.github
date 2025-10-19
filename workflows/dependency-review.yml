@@ -5,8 +5,8 @@
 #       for security vulnerabilities or other risks.
 #
 # Trigger:
-#       Runs automatically whenever a pull request is opened, updated, or
-#       synchronized in the ecommerce platform org.
+#       Runs automatically whenever a pull request is opened, updated,
+#       in the ecommerce platform org.
 #
 # Notes:
 #       Uses GitHub's official Dependency Review action to highlight potential
@@ -15,7 +15,10 @@
 name: Dependency Review
 
 on:
+  push:
+    branches: [main, develop]
   pull_request:
+    branches: [main, develop]
 
 jobs:
   dependency-review:

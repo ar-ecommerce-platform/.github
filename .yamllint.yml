@@ -1,16 +1,28 @@
-# Base ruleset
+# ------------------------------------------------------------------------------
+# YAML Lint Config
+# Purpose: Enforce consistent YAML style in PRs and main branch
+# ------------------------------------------------------------------------------
+
+# Start with the default rules
 extends: default
 
 rules:
-  # Max line length set to 120 characters
+  # MD013 equivalent: Max line length 120 for readability
   line-length:
     max: 120
-    level: warning
-  # 2 spaces for indentation, and consistent list style
+    level: warning  # Warning, does not block PR merge
+
+  # Indentation: 2 spaces, sequences must be consistent
   indentation:
     spaces: 2
     indent-sequences: consistent
-  # No trailing spaces
+
+  # No trailing spaces at end of lines
   trailing-spaces: enable
-  # Require new line at end of file
+
+  # Require a new line at end of file
   new-line-at-end-of-file: enable
+
+  # Optional: truthy values must be explicit (true/false) instead of yes/no
+  truthy:
+    level: error
