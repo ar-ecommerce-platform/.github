@@ -20,17 +20,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # ---------------------------
-      # Checkout the repository
+      # Checkout the caller repository
       # ---------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.repository.full_name }}
 
-      - name: Debug workspace
+      # ---------------------------
+      # Checkout the .github repository
+      # ---------------------------
+      - name: Checkout shared org .github repo
+        uses: actions/checkout@v4
+        with:
+          repository: ar-ecommerce-platform/.github
+          path: .github-shared
+
+      - name: Debug workspaces
         run: |
-          echo "Current working directory:"
-          pwd
-          echo "List workspace files:"
-          ls -R
+          echo "Caller repo path: $(pwd)"
+          echo "List caller repo root:"
+          ls -la
+          echo "List shared .github repo:"
+          ls -la .github-shared
 
       # ---------------------------
       # YAML lint using a custom config (.yamllint.yml)
@@ -38,7 +50,7 @@ jobs:
       - name: Lint YAML files
         uses: ibiqlik/action-yamllint@v3
         with:
-          config_file: .github/.yamllint.yml
+          config_file: .github-shared/.yamllint.yml
 
 
   lint-markdown:
