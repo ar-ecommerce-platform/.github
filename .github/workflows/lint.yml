@@ -24,12 +24,24 @@ jobs:
       # ---------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          repository: ar-ecommerce-platform/.github
+          path: .github-shared
+
+      - name: Debug workspace
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "List workspace files:"
+          ls -R
 
       # ---------------------------
       # YAML lint using a custom config (.yamllint.yml)
       # ---------------------------
       - name: Lint YAML files
         uses: ibiqlik/action-yamllint@v3
+        with:
+          config-file: .github-shared/.yamllint.yml
 
 
   lint-markdown:
