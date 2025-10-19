@@ -12,10 +12,7 @@
 name: Linting
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  workflow_call: {}
 
 jobs:
   lint-yaml:
