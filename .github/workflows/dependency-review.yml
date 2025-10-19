@@ -5,8 +5,7 @@
 #       for security vulnerabilities or other risks.
 #
 # Trigger:
-#       Runs automatically whenever a pull request is opened, updated,
-#       in the ecommerce platform org.
+#       Whenever a PR is opened, synchronized, or reopened
 #
 # Notes:
 #       Uses GitHub's official Dependency Review action to highlight potential
@@ -15,7 +14,8 @@
 name: Dependency Review
 
 on:
-  workflow_call: {}
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
   dependency-review:
@@ -35,3 +35,5 @@ jobs:
       # ---------------------------
       - name: Dependency check
         uses: actions/dependency-review-action@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
