@@ -26,4 +26,4 @@ rules:
 
   # Truthy values disabled
   truthy:
-    level: disable
+    check-keys: false
