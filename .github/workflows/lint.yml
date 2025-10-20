@@ -60,10 +60,21 @@ jobs:
     continue-on-error: true  # Warnings don't block PRs
     steps:
       # ---------------------------
-      # Checkout the repository
+      # Checkout the caller repository
       # ---------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.repository.full_name }}
+
+      # ---------------------------
+      # Checkout the .github repository
+      # ---------------------------
+      - name: Checkout shared org .github repo
+        uses: actions/checkout@v4
+        with:
+          repository: ar-ecommerce-platform/.github
+          path: .github-shared
 
       # ---------------------------
       # Markdown lint using a custom JSON config
