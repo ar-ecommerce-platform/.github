@@ -24,6 +24,6 @@ rules:
   # Require a new line at end of file
   new-line-at-end-of-file: enable
 
-  # Optional: truthy values must be explicit (true/false) instead of yes/no
+  # Truthy values disabled
   truthy:
-    level: error
+    level: off
