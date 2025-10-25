@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- ==== General exclusions ==== -->
+    <suppress files=".*[\\/]generated[\\/].*" checks=".*"/>
+    <suppress files=".*(Generated|Lombok).*\.java" checks=".*"/>
+
+    <!-- ==== Test exclusions ==== -->
+    <suppress files=".*[\\/]src[\\/]test[\\/].*" checks="Javadoc.*"/>
+    <suppress files=".*[\\/]src[\\/]test[\\/].*" checks="MagicNumber"/>
+
+    <!-- ==== Spring / DI visibility ==== -->
+    <suppress checks="VisibilityModifier" files=".*" lines=".*@Autowired.*"/>
+    <suppress checks="VisibilityModifier" files=".*" lines=".*@Value.*"/>
+    <suppress checks="VisibilityModifier" files=".*" lines=".*@Inject.*"/>
+
+    <!-- ==== Misc project-specific ==== -->
+    <suppress files=".*Application\.java" checks="HideUtilityClassConstructor"/>
+</suppressions>
