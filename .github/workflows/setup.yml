@@ -120,22 +120,42 @@ jobs:
       - name: Tag Image as :ci
         run: docker tag ${{ steps.image.outputs.image_sha }} ${{ steps.image.outputs.image_ci }}
 
-      # ---------------------------
-      # 11. Start the service
-      # ---------------------------
-      - name: Start the service
-        run: |
-          docker run -d \
-          --name ${{ inputs.service_name }} \
-          -p 8888:8888 \
-          --health-cmd="curl -f http://localhost:8888/actuator/health || exit 1" \
-          --health-interval=10s \
-          --health-timeout=10s \
-          --health-retries=15 \
-          ${{ steps.image.outputs.image_sha }}
 
       # ---------------------------
-      # 12. Wait for service to be healthy
+      # 11. Checkout Config Repo
+      # ---------------------------
+      - name: Checkout Config Repo
+        uses: actions/checkout@v5
+        with:
+          repository: ar-ecommerce-platform/config-repo
+          path: config-repo
+
+      # ---------------------------
+      # 12. Get service port from application.yml
+      # ---------------------------
+      - name: Get service port
+        id: get-port
+        run: |
+          PORT=$(yq e ".server.port" config-repo/${{ inputs.service_name }}/application.yml)
+          echo "port=$PORT" >> $GITHUB_OUTPUT
+
+      # ---------------------------
+      # 13. Start the service
+      # ---------------------------
+      - name: Start service
+        run: |
+          docker run -d \
+            --name ${{ inputs.service_name }} \
+            -p ${{ steps.get-port.outputs.port }}:${{ steps.get-port.outputs.port }} \
+            -e SERVER_PORT=${{ steps.get-port.outputs.port }} \
+            --health-cmd="curl -f http://localhost:${{ steps.get-port.outputs.port }}/actuator/health || exit 1" \
+            --health-interval=10s \
+            --health-timeout=10s \
+            --health-retries=15 \
+            ${{ steps.image.outputs.image_sha }}
+
+      # ---------------------------
+      # 14. Wait for service to be healthy
       # ---------------------------
       - name: Wait for service to be healthy
         uses: ar-ecommerce-platform/.github/.github/actions/wait-for-health@develop
@@ -143,7 +163,7 @@ jobs:
           container_name: ${{ inputs.service_name }}
 
       # ---------------------------
-      # 13. Push test image
+      # 15. Push test image
       # ---------------------------
       - name: Push Test Image
         run: |
