@@ -51,7 +51,7 @@ jobs:
       # 2. Waits for config server to be healthy
       # ---------------------------
       - name: Wait for config-server to be healthy
-        uses: ar-ecommerce-platform/ci-workflows/.github/actions/wait-for-health@dev
+        uses: ar-ecommerce-platform/.github/.github/actions/wait-for-health@develop
         with:
           container_name: config-server
 
@@ -78,7 +78,7 @@ jobs:
       # ---------------------------
       - name: Wait for test-db to be healthy
         if: ${{ inputs.enable_database }}
-        uses: ar-ecommerce-platform/ci-workflows/.github/actions/wait-for-health@dev
+        uses: ar-ecommerce-platform/.github/.github/actions/wait-for-health@develop
         with:
           container_name: test-db
 

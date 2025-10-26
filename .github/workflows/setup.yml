@@ -138,7 +138,7 @@ jobs:
       # 12. Wait for service to be healthy
       # ---------------------------
       - name: Wait for service to be healthy
-        uses: ar-ecommerce-platform/ci-workflows/.github/actions/wait-for-health@test-checkstyle
+        uses: ar-ecommerce-platform/.github/.github/actions/wait-for-health@develop
         with:
           container_name: ${{ inputs.service_name }}
 
