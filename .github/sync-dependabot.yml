@@ -1,0 +1,53 @@
+# ------------------------------------------------------------------------------
+# Workflow: Sync Dependabot Config
+# Purpose:
+#   Keeps every microservice repo up-to-date with the latest Dependabot
+#   configuration from the central .github repo.
+#
+# Trigger:
+#   - On push to main when dependabot.yml changes
+#   - Manually via workflow_dispatch
+#
+# Notes:
+#   - Uses a GitHub PAT with repo permissions (GH_PAT)
+#   - Skips commits if no file changes (avoids spam)
+# ------------------------------------------------------------------------------
+
+name: Sync Dependabot Config
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - ".github/dependabot.yml"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------
+      # 1. Checkout .github repo
+      # ---------------------------
+      - name: Checkout .github repo
+        uses: actions/checkout@v4
+
+      # ---------------------------
+      # 2. Sync Dependabot file to all microservice repos
+      # ---------------------------
+      - name: Sync Dependabot config
+        uses: andreaswilli/git-sync@v3
+        with:
+          source_repo: ${{ github.repository }}
+          source_file: ".github/dependabot.yml"
+          target_file: ".github/dependabot.yml"
+          target_repos: |
+            ar-ecommerce-platform/config-server
+            ar-ecommerce-platform/discovery-server
+            ar-ecommerce-platform/api-gateway
+            ar-ecommerce-platform/auth-service
+            ar-ecommerce-platform/user-service
+          commit_message: "chore(sync): update dependabot config"
+          token: ${{ secrets.GH_PAT }}
+          skip_no_diff: true

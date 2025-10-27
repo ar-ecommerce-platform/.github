@@ -1,3 +1,4 @@
+# ------------------------------------------------------------------------------
 # Workflow: Security Scan
 # Purpose:
 #   Runs OWASP Dependency Check and Snyk Container Scan on test image
