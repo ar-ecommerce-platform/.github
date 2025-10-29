@@ -75,21 +75,14 @@ jobs:
             gradle-${{ runner.os }}-
 
       # ---------------------------
-      # 5. Grants permission to Gradle wrapper
-      #   - Prevents "Permission denied" errors
-      # ---------------------------
-      - name: Grant execute permission for Gradle wrapper
-        run: chmod +x gradlew
-
-      # ---------------------------
-      # 6. Builds app
+      # 5. Builds app
       #   - Skips tests since they have their own workflow
       # ---------------------------
       - name: Build (no test)
         run: ./gradlew build -x test --no-daemon
 
       # ---------------------------
-      # 7. Logs in to GitHub Container registry
+      # 6. Logs in to GitHub Container registry
       # ---------------------------
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -99,7 +92,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # ---------------------------
-      # 8. Set Docker Image Name
+      # 7. Set Docker Image Name
       # ---------------------------
       - name: Set Docker Image Name
         id: image
@@ -109,61 +102,19 @@ jobs:
           echo "image_ci=${IMAGE_NAME}:ci" >> "$GITHUB_OUTPUT"
 
       # ---------------------------
-      # 9. Build test image
+      # 8. Build test image
       # ---------------------------
       - name: Build Image
         run: docker build -t ${{ steps.image.outputs.image_sha }} .
 
       # ---------------------------
-      # 10. Tag Image as :ci
+      # 9. Tag Image as :ci
       # ---------------------------
       - name: Tag Image as :ci
         run: docker tag ${{ steps.image.outputs.image_sha }} ${{ steps.image.outputs.image_ci }}
 
-
       # ---------------------------
-      # 11. Checkout Config Repo
-      # ---------------------------
-      - name: Checkout Config Repo
-        uses: actions/checkout@v5
-        with:
-          repository: ar-ecommerce-platform/config-repo
-          path: config-repo
-
-      # ---------------------------
-      # 12. Get service port from application.yml
-      # ---------------------------
-      - name: Get service port
-        id: get-port
-        run: |
-          PORT=$(yq e ".server.port" config-repo/${{ inputs.service_name }}/application.yml)
-          echo "port=$PORT" >> $GITHUB_OUTPUT
-
-      # ---------------------------
-      # 13. Start the service
-      # ---------------------------
-      - name: Start service
-        run: |
-          docker run -d \
-            --name ${{ inputs.service_name }} \
-            -p ${{ steps.get-port.outputs.port }}:${{ steps.get-port.outputs.port }} \
-            -e SERVER_PORT=${{ steps.get-port.outputs.port }} \
-            --health-cmd="curl -f http://localhost:${{ steps.get-port.outputs.port }}/actuator/health || exit 1" \
-            --health-interval=10s \
-            --health-timeout=10s \
-            --health-retries=15 \
-            ${{ steps.image.outputs.image_sha }}
-
-      # ---------------------------
-      # 14. Wait for service to be healthy
-      # ---------------------------
-      - name: Wait for service to be healthy
-        uses: ar-ecommerce-platform/.github/.github/actions/wait-for-health@develop
-        with:
-          container_name: ${{ inputs.service_name }}
-
-      # ---------------------------
-      # 15. Push test image
+      # 10. Push test image
       # ---------------------------
       - name: Push Test Image
         run: |
