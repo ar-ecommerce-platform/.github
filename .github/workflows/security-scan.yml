@@ -78,7 +78,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.gradle/dependency-check-data
-          key: dependency-check-data-${{ hashFiles('**/*.gradle*') }}
+          key: dependency-check-data-${{ runner.os }}-${{ date('YYYY-WW') }}
+          restore-keys: |
+            dependency-check-data-${{ runner.os }}-
 
       # ---------------------------
       # 5. Scans project dependencies for known vulnerabilities.
